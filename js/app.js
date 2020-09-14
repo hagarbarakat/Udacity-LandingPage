@@ -17,14 +17,14 @@
  * Define Global Variables
  * 
 */
-
+const navbar = document.getElementById("navbar__list");
+const sections = document.querySelectorAll("section");
 
 /**
  * End Global Variables
  * Start Helper Functions
  * 
-*/
-
+*/ 
 
 
 /**
@@ -34,12 +34,28 @@
 */
 
 // build the nav
-
+// TODO: Build nav bar (✔)
+function BuildNavBar(){
+    for(let section of sections){
+        let sec = document.createElement("li");
+        sec.className = "list-item";
+        sec.dataset.nav = section.id;
+        sec.innerText = sec.dataset.nav;
+        navbar.appendChild(sec);
+    }
+}
 
 // Add class 'active' to section when near top of viewport
 
 
 // Scroll to anchor ID using scrollTO event
+function scrollToClick() {
+    navbar.addEventListener('click', function (event) {
+        const clicked = document.querySelector('#' + event.target.dataset.nav);
+        console.log(clicked);
+        clicked.scrollIntoView();
+    });
+};
 
 
 /**
@@ -49,9 +65,7 @@
 */
 
 // Build menu 
-
+BuildNavBar();
 // Scroll to section on link click
-
+scrollToClick();
 // Set sections as active
-
-

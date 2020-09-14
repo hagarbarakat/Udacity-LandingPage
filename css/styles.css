@@ -10,6 +10,11 @@
 
 
 /* ---- Base Rules ---- */
+html{
+    scroll-behavior: smooth;
+}
+
+
 body {
     background: rgb(136,203,171);
     background: linear-gradient(0deg, rgba(136,203,171,1) 0%, rgba(0,13,60,1) 100%);
@@ -71,7 +76,16 @@ section {
 }
 
 .navbar__menu li {
+    text-transform: capitalize;
     display: inline-block;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 1rem;
+    font-family: 'Oxygen', Sans-Serif;
+}
+
+.navbar__menu li:hover{
+    color: rgba(136,203,171,1);
 }
 
 .navbar__menu .menu__link {
@@ -90,7 +104,9 @@ section {
 
 /* Header Styles */
 .page__header {
-    background: #fff;
+    background: rgba(0, 0, 0, 0.13);
+    opacity: 0.6;
+    height: 8%;
     position: fixed;
     top: 0;
     width: 100%;
