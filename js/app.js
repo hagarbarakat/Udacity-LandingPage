@@ -25,6 +25,15 @@ const sections = document.querySelectorAll("section");
  * Start Helper Functions
  * 
 */ 
+function elementInViewport(elem) {
+    const bounding = elem.getBoundingClientRect();
+    return (
+        bounding.top >= 0 &&
+        bounding.left >= 0 &&
+        bounding.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        bounding.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+}
 
 
 /**
@@ -46,16 +55,29 @@ function BuildNavBar(){
 }
 
 // Add class 'active' to section when near top of viewport
-
+function activateSection(){
+    for(let section of sections){
+        if(elementInViewport(section)){
+            section.classList.add("your-active-class");
+        }
+        else{
+            section.classList.remove("your-active-class");
+        }
+    }
+}
 
 // Scroll to anchor ID using scrollTO event
 function scrollToClick() {
     navbar.addEventListener('click', function (event) {
         const clicked = document.querySelector('#' + event.target.dataset.nav);
-        console.log(clicked);
-        clicked.scrollIntoView();
+        //console.log(clicked);
+        //clicked.scrollIntoView();
+        window.scrollTo({
+            top: clicked.offsetTop - navbar.offsetHeight,
+            behavior: 'smooth',
+          });
     });
-};
+}
 
 
 /**
@@ -69,3 +91,7 @@ BuildNavBar();
 // Scroll to section on link click
 scrollToClick();
 // Set sections as active
+document.addEventListener('scroll', function () {
+    activateSection();
+});
+
