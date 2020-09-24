@@ -19,22 +19,32 @@
 */
 const navbar = document.getElementById("navbar__list");
 const sections = document.querySelectorAll("section");
-
+const num_sections = 2;
 /**
  * End Global Variables
  * Start Helper Functions
  * 
 */ 
-function elementInViewport(elem) {
-    const bounding = elem.getBoundingClientRect();
-    return (
-        bounding.top >= 0 &&
-        bounding.left >= 0 &&
-        bounding.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-        bounding.right <= (window.innerWidth || document.documentElement.clientWidth)
-    );
-}
 
+function elementInViewport(el) {
+    var top = el.offsetTop;
+    var left = el.offsetLeft;
+    var width = el.offsetWidth;
+    var height = el.offsetHeight;
+  
+    while(el.offsetParent) {
+      el = el.offsetParent;
+      top += el.offsetTop;
+      left += el.offsetLeft;
+    }
+  
+    return (
+      top < (window.pageYOffset + window.innerHeight) &&
+      left < (window.pageXOffset + window.innerWidth) &&
+      (top + height) > window.pageYOffset &&
+      (left + width) > window.pageXOffset
+    );
+  }
 
 /**
  * End Helper Functions
@@ -45,17 +55,18 @@ function elementInViewport(elem) {
 // build the nav
 // TODO: Build nav bar (✔)
 function BuildNavBar(){
-    for(let section of sections){
+    sections.forEach(function(section){
         let sec = document.createElement("li");
         sec.className = "list-item";
         sec.dataset.nav = section.id;
         sec.innerText = sec.dataset.nav;
         navbar.appendChild(sec);
-    }
+        });
+    
 }
 
 // Add class 'active' to section when near top of viewport
-function activateSection(){
+activateSection = () =>{
     for(let section of sections){
         if(elementInViewport(section)){
             section.classList.add("your-active-class");
